@@ -17,7 +17,7 @@ void main() {
   // runApp(const FloatingAppBar());
 
   // runApp(const OrientationView());
-  runApp(const ThemeShareColorsAndFont());
+  // runApp(const ThemeShareColorsAndFont());
 }
 
 abstract class ListItem {
