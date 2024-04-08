@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:list_application/bottomnavigator.dart';
+import 'package:list_application/cartpage.dart';
 
 class TotalPage extends StatelessWidget {
   @override
@@ -63,7 +65,8 @@ class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
   final List<Customer> _people = [
     Customer(name: 'Customer D', imagePath: 'images/A.jpg'),
     Customer(name: 'Customer E', imagePath: 'images/B.jpg'),
-    Customer(name: 'Customer F', imagePath: 'images/C.jpg')
+    Customer(name: 'Customer F', imagePath: 'images/C.jpg'),
+    Customer(name: 'Customer G', imagePath: 'images/G.jpg')
   ];
 
   final GlobalKey _draggableKey = GlobalKey();
@@ -76,17 +79,38 @@ class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
     });
   }
 
+  int _currentIndex = 0;
+
+  void _onTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget body;
+    switch (_currentIndex) {
+      case 0:
+        body = _buildContent();
+        break;
+      case 1:
+        body = CartPage(customer: _people);
+        break;
+      default:
+        body = Container();
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F7),
-      appBar: _buildAppBar(),
-      body: _buildContent(),
-      bottomNavigationBar: _bottomNavigationBar(),
+      appBar: _buildAppBar(context),
+      body: body,
+      bottomNavigationBar:
+          BottomNavigationBarWidget(currentIndex: _currentIndex, onTap: _onTap),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
       iconTheme: const IconThemeData(color: Color(0xFFF64209)),
       title: Text(
@@ -188,17 +212,6 @@ class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
       ),
     );
   }
-
-  Widget _bottomNavigationBar() {
-    return BottomNavigationBar(
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart), label: 'My Cart'),
-      ],
-      currentIndex: 0,
-    );
-  }
 }
 
 class CustomerCart extends StatelessWidget {
@@ -268,7 +281,7 @@ class CustomerCart extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${customer.items.length}item${customer.items.length != 1 ? 's' : ''}',
+                      '${customer.items.length} item${customer.items.length != 1 ? 's' : ''}',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: textColor,
                             fontSize: 12,
@@ -337,6 +350,14 @@ class MenuListItem extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  Text(
+                    price,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.green,
                         ),
                   ),
                 ],
