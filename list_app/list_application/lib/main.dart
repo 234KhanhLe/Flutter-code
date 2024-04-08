@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:list_application/draganddrop.dart';
 
 void main() {
   // runApp(MyApp(
@@ -18,6 +19,9 @@ void main() {
 
   // runApp(const OrientationView());
   // runApp(const ThemeShareColorsAndFont());
+  // runApp(const TapAble());
+  runApp(TotalPage());
+  // runApp(const ButtonApp());
 }
 
 abstract class ListItem {
@@ -313,6 +317,108 @@ class ThemeShareColorsAndFont extends StatelessWidget {
         ),
       ),
       home: const MyHomePage(title: appName),
+    );
+  }
+}
+
+class TapAble extends StatelessWidget {
+  const TapAble({super.key});
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Gesture Demo';
+
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: title,
+      home: HomePage(title: title),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  final String title;
+  const HomePage({super.key, required this.title});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: const Center(
+        child: MyButton(),
+      ),
+    );
+  }
+}
+
+class MyButton extends StatelessWidget {
+  const MyButton({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        const snackBar = SnackBar(content: Text('Tap'));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.lightBlue,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Text('My Button'),
+      ),
+    );
+  }
+}
+
+class InkButton extends StatelessWidget {
+  const InkButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Tap'),
+        ));
+      },
+      child: const Padding(
+        padding: EdgeInsets.all(12),
+        child: Text('Flat button'),
+      ),
+    );
+  }
+}
+
+class ButtonHomePage extends StatelessWidget {
+  final String title;
+
+  const ButtonHomePage({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: const Center(
+        child: MyButton(),
+      ),
+    );
+  }
+}
+
+class ButtonApp extends StatelessWidget {
+  const ButtonApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const title = 'InkWell Demo';
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: title,
+      home: ButtonHomePage(title: title),
     );
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 
@@ -12,6 +12,7 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         // appBar: AppBar(
         //   title: Center(child: Text('Demo')),
@@ -19,28 +20,18 @@ class MyWidget extends StatelessWidget {
         // ),
         backgroundColor: Colors.blueGrey,
         body: SafeArea(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Column(
             children: <Widget>[
-              Container(
-                // height: 100.0,
-                color: Colors.green,
-                child: Text('Container 1'),
+              CircleAvatar(
+                radius: 50.0,
+                backgroundImage: AssetImage('images/IMG_1047.JPG'),
               ),
-              SizedBox(
-                width: 30.0,
-              ),
-              Container(
-                // width: 30.0,
-                // height: 100.0,
-                color: Colors.blue,
-                child: Text('Container2'),
-              ),
-              Container(
-                // width: 30.0,
-                // height: 100.0,
-                color: Colors.red,
-                child: Text('Container3'),
+              Text(
+                'Cao Khanh Le',
+                style: TextStyle(
+                    fontSize: 40.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
             ],
           ),
