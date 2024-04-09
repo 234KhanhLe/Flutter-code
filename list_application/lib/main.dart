@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:list_application/draganddrop.dart';
+import 'package:list_application/inputandform.dart';
+import 'package:list_application/tab.dart';
 
 void main() {
   // runApp(MyApp(
@@ -20,8 +22,13 @@ void main() {
   // runApp(const OrientationView());
   // runApp(const ThemeShareColorsAndFont());
   // runApp(const TapAble());
-  runApp(TotalPage());
+  // runApp(TotalPage());
   // runApp(const ButtonApp());
+  // runApp(const AppSwipe());
+  // runApp(const InputForm());
+  // runApp(const RetrieveOverallPage());
+  // runApp(const ValidateFormApp());
+  runApp(const TabBarDemo());
 }
 
 abstract class ListItem {
@@ -419,6 +426,56 @@ class ButtonApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: title,
       home: ButtonHomePage(title: title),
+    );
+  }
+}
+
+class AppSwipe extends StatefulWidget {
+  const AppSwipe({super.key});
+  @override
+  AppSwipeState createState() {
+    return AppSwipeState();
+  }
+}
+
+class AppSwipeState extends State<AppSwipe> {
+  final items = List<String>.generate(20, (i) => 'Item ${i + 1}');
+
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Dismissing Items';
+
+    return MaterialApp(
+      title: title,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(title),
+        ),
+        body: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return Dismissible(
+                key: Key(item),
+                onDismissed: (direction) {
+                  setState(() {
+                    items.removeAt(index);
+                  });
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('$item dismissed')));
+                },
+                background: Container(
+                  color: Colors.red,
+                ),
+                child: ListTile(
+                  title: Text(item),
+                ));
+          },
+        ),
+      ),
     );
   }
 }
