@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 void main() {}
 List<Car> _carsList = [
-  Car(name: 'Car A', driverName: 'Driver A'),
-  Car(name: 'Car B', driverName: 'Driver B'),
-  Car(name: 'Car C', driverName: 'Driver C')
+  Car(name: 'Car A', driverName: 'Driver A', hired: false),
+  Car(name: 'Car B', driverName: 'Driver B', hired: false),
+  Car(name: 'Car C', driverName: 'Driver C', hired: true)
 ];
 List<Bike> _bikeList = [
-  Bike(name: 'Bike A', driverName: ''),
-  Bike(name: 'Bike B', driverName: ''),
-  Bike(name: 'Bike C', driverName: '')
+  Bike(name: 'Bike A', driverName: '', hired: false),
+  Bike(name: 'Bike B', driverName: '', hired: false),
+  Bike(name: 'Bike C', driverName: '', hired: false)
 ];
 List<Bus> _busList = [
   Bus(name: 'Bus A', driverName: 'Bus Driver A'),
@@ -112,16 +112,26 @@ abstract class Vehicle {
   final String name;
   final String type;
   final String? driverName;
+  final bool? hired;
 
-  Vehicle({required this.name, required this.type, this.driverName});
+  Vehicle(
+      {required this.name, required this.type, this.driverName, this.hired});
 }
 
 class Car extends Vehicle {
-  Car({required super.name, super.type = 'Car', required super.driverName});
+  Car(
+      {required super.name,
+      super.type = 'Car',
+      required super.driverName,
+      required super.hired});
 }
 
 class Bike extends Vehicle {
-  Bike({required super.name, super.type = 'Bike', super.driverName});
+  Bike(
+      {required super.name,
+      super.type = 'Bike',
+      super.driverName,
+      required super.hired});
 }
 
 class Bus extends Vehicle {
@@ -134,13 +144,16 @@ class VehicleDetailView extends StatelessWidget {
   const VehicleDetailView({super.key, required this.vehicle});
   @override
   Widget build(BuildContext context) {
+    bool canBeHired = false;
     String driverName;
     if (vehicle is Car) {
       driverName = (vehicle as Car).driverName ?? 'Unknown';
+      canBeHired = !(vehicle as Car).hired!;
     } else if (vehicle is Bus) {
       driverName = (vehicle as Bus).driverName ?? 'Unknown';
     } else {
       driverName = 'N/A';
+      canBeHired = !(vehicle as Bike).hired!;
     }
     return Scaffold(
       appBar: AppBar(
@@ -167,6 +180,19 @@ class VehicleDetailView extends StatelessWidget {
                 'Driver Name: $driverName',
                 style: const TextStyle(fontSize: 16),
               ),
+            const SizedBox(height: 16),
+            if (canBeHired)
+              ElevatedButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(
+                        SnackBar(
+                            content:
+                                Text('Hired this vehicle: ${vehicle.name}')),
+                      );
+                  },
+                  child: const Text('Hire this vehicle')),
           ],
         ),
       ),
