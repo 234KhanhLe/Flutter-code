@@ -31,12 +31,10 @@ class Item {
 
 class Customer {
   final String name;
-  final String imagePath;
   final List<Item> items;
 
   Customer({
     required this.name,
-    required this.imagePath,
     List<Item>? items,
   }) : items = items ?? [];
 
@@ -48,9 +46,9 @@ class Customer {
 }
 
 const List<Item> _items = [
-  Item(totalPrices: 100, name: 'Avatar A', uid: '1', imagePath: 'images/D.png'),
-  Item(totalPrices: 200, name: 'Avatar B', uid: '2', imagePath: 'images/E.png'),
-  Item(totalPrices: 300, name: 'Avatar C', uid: '3', imagePath: 'images/F.png'),
+  Item(totalPrices: 100, name: 'Dish A', uid: '1', imagePath: 'images/D.png'),
+  Item(totalPrices: 200, name: 'Dish B', uid: '2', imagePath: 'images/E.png'),
+  Item(totalPrices: 300, name: 'Dish C', uid: '3', imagePath: 'images/F.png'),
 ];
 
 @immutable
@@ -63,10 +61,10 @@ class ExampleDragAndDrop extends StatefulWidget {
 class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
     with TickerProviderStateMixin {
   final List<Customer> _people = [
-    Customer(name: 'Customer D', imagePath: 'images/A.jpg'),
-    Customer(name: 'Customer E', imagePath: 'images/B.jpg'),
-    Customer(name: 'Customer F', imagePath: 'images/C.jpg'),
-    Customer(name: 'Customer G', imagePath: 'images/G.jpg')
+    Customer(name: 'Table A'),
+    Customer(name: 'Table B'),
+    Customer(name: 'Table C'),
+    Customer(name: 'Table D')
   ];
 
   final GlobalKey _draggableKey = GlobalKey();
@@ -239,22 +237,14 @@ class CustomerCart extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 12,
-            vertical: 24,
+            vertical: 6,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ClipOval(
-                child: SizedBox(
-                  width: 46,
-                  height: 46,
-                  child: Image.asset(
-                    customer.imagePath,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              const SizedBox(
+                height: 4,
               ),
-              const SizedBox(height: 8),
               Text(
                 customer.name,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
