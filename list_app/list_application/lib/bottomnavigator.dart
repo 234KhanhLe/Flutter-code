@@ -12,6 +12,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
     return BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: onTap,
+        backgroundColor: Colors.purple.shade100,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(

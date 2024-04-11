@@ -4,25 +4,22 @@ import 'package:list_application/draganddrop.dart';
 class CartPage extends StatelessWidget {
   final List<Customer> _customer;
 
-  CartPage({super.key, required List<Customer> customer})
+  const CartPage({super.key, required List<Customer> customer})
       : _customer = customer;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Orders List'),
-      ),
       body: ListView.builder(
         itemCount: _customer.length,
         itemBuilder: (context, index) {
-          return _buildCartList(_customer[index]);
+          return _buildCartList(context, _customer[index]);
         },
       ),
     );
   }
 
-  Widget _buildCartList(Customer customer) {
+  Widget _buildCartList(BuildContext context, Customer customer) {
     final num totalPriceOfEachCustomer = customer.items.isNotEmpty
         ? customer.items.map((item) => item.totalPrices).reduce((a, b) => a + b)
         : 0.0;
@@ -54,6 +51,12 @@ class CartPage extends StatelessWidget {
                     subtitle: Text(
                         '\$${(item.totalPrices / 100.0).toStringAsFixed(2)}',
                         style: const TextStyle(color: Colors.lightGreen)),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.remove_circle),
+                      onPressed: () {
+                        _showRemovalConfirmation(context, customer, item);
+                      },
+                    ),
                   ),
                 const Divider(),
                 ListTile(
@@ -70,5 +73,17 @@ class CartPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _showRemovalConfirmation(
+      BuildContext context, Customer customer, Item item) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Removed ${item.name} from ${customer.name}'),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () {},
+      ),
+    ));
+    customer.removeItem(item);
   }
 }
