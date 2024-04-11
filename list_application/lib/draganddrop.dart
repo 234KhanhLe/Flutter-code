@@ -3,6 +3,8 @@ import 'package:list_application/bottomnavigator.dart';
 import 'package:list_application/cartpage.dart';
 
 class TotalPage extends StatelessWidget {
+  const TotalPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -42,6 +44,10 @@ class Customer {
     final totalPriceCents =
         items.fold<int>(0, (prev, item) => prev + item.totalPrices);
     return '\$${(totalPriceCents / 100.0).toStringAsFixed(2)}';
+  }
+
+  void removeItem(Item item) {
+    items.remove(item);
   }
 }
 
@@ -111,16 +117,27 @@ class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
       iconTheme: const IconThemeData(color: Color(0xFFF64209)),
-      title: Text(
-        'Order Food',
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontSize: 36,
-              color: const Color(0xFFF64209),
-              fontWeight: FontWeight.bold,
-            ),
-      ),
-      backgroundColor: const Color(0xFFF7F7F7),
+      backgroundColor: Colors.transparent,
       elevation: 0,
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.lightBlue, Colors.purple],
+          ),
+        ),
+        child: Center(
+          child: Text(
+            'Order Food',
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontSize: 36,
+                  color: Colors.lightBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        ),
+      ),
       centerTitle: true,
     );
   }
@@ -305,7 +322,7 @@ class MenuListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       elevation: 12,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
@@ -314,8 +331,8 @@ class MenuListItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: SizedBox(
-                width: 120,
-                height: 120,
+                width: 100,
+                height: 100,
                 child: Center(
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 100),
@@ -388,8 +405,4 @@ class DraggingListItem extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(TotalPage());
 }
