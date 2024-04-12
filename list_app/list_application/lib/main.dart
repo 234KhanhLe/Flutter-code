@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:list_application/draganddrop.dart';
-import 'package:list_application/drawer.dart';
-import 'package:list_application/fetchdata.dart';
-// import 'package:list_application/inputandform.dart';
-// import 'package:list_application/tab.dart';
+import 'package:list_application/parsejson.dart';
 
 void main() {
   // runApp(MyApp(
@@ -30,7 +26,10 @@ void main() {
   // runApp(const TabBarDemo());
   // runApp(const CustomHomePage());
   // runApp(const TotalPage());
-  runApp(const FetchDataApp());
+  // runApp(const FetchDataApp());
+  // runApp(const PostDataApp());
+  // runApp(const MyWebSocketApp());
+  runApp(const ParseJsonApp());
 }
 
 abstract class ListItem {
